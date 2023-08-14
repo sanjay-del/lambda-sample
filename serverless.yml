@@ -9,7 +9,7 @@ provider:
   memorySize: 2048 # Lambda memory size to ensure we have faster boot time
   stage: dev # set the stage as your environment dev, prod, etc
   timeout: 10
-  region: us-east-1
+  region: us-west-2
 
 functions:
   userAuth:
