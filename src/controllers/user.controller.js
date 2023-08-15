@@ -1,13 +1,13 @@
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const AWS= require('aws-sdk')
-AWS.config.update({region: 'us-west-2'});
 const validateDid= async(req,res)=>{
   const did = req.query.did
   console.log(did)
-  const eventbridge = new AWS.EventBridge({eventBusName: 'event-relay-bus'});
+  const eventbridge = new AWS.EventBridge();
   let response;  
   // Define the event details
   const eventDetails = {
+      EventBusName: 'event-relay-bus',
       Source: 'eventProducerApp',
       DetailType: 'inbound-event-sent',
       Detail: JSON.stringify({ "event-id": "123", "return-response-event": true })
@@ -22,7 +22,7 @@ const validateDid= async(req,res)=>{
       console.error('Error sending event:', error);
     }
    return res.status(200).send(`Itn membership found \
-   ${response}`)
+   ${JSON.stringify(response)}`)
   }
   else{
     return res.status(404).send('Itn membership not found')
